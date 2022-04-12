@@ -39,4 +39,12 @@ public class StudentMapperTest extends Java2022ApplicationTests {
         student.setStudentNumber("20200");
         System.out.println(studentMapper.deleteStudentByStuNo(student));
     }
+
+    @Test
+    public void updateTest(){
+        Student student=new Student();
+        student.setStudentNumber("20201");
+        student.setName("张三");
+        System.out.println(studentMapper.updateStudentByStuNo(student));
+    }
 }
