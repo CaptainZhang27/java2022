@@ -3,6 +3,7 @@ package org.scut.java2022.service.impl;
 import org.scut.java2022.mapper.UserMapper;
 import org.scut.java2022.pojo.User;
 import org.scut.java2022.service.UserService;
+import org.scut.java2022.utils.TokenUntil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,23 +21,27 @@ public class UserServiceImp implements UserService {
     public Map<String,Object> check(User user) {
         Map<String,Object> result=new HashMap<>();
 
-        User recordedUser=userMapper.selectPswByUname(user);
-
-        if(recordedUser==null){
-            result.put("code","2002");
-            result.put("msg","用户不存在");
+        if(user.getUserName()!=null){
+            User recordedUser=userMapper.selectPswByUname(user);
+            if(recordedUser==null){
+                result.put("code","2002");
+                result.put("msg","用户不存在");
+            }else{
+                if(recordedUser.getPassword().equals(user.getPassword())){
+                    result.put("code","1000");
+                    result.put("token", TokenUntil.getToken(user));
+                }
+                else {
+                    result.put("code","2001");
+                    result.put("msg","用户密码错误");
+                }
+            }
         }
-        else if(recordedUser.getPassword()==null){
+        else{
             result.put("code","2003");
             result.put("msg","用户参数缺失");
         }
-        else if(recordedUser.getPassword().equals(user.getPassword())){
-            result.put("code","1000");
-        }
-        else {
-            result.put("code","2001");
-            result.put("msg","用户密码错误");
-        }
+
         return result;
     }
 }
