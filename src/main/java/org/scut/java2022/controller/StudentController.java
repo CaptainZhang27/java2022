@@ -1,54 +1,59 @@
 package org.scut.java2022.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.scut.java2022.pojo.Student;
 import org.scut.java2022.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    @RequestMapping("/query")
-    public List<Student> query(Student student){
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @RequestMapping(value = "/query",method = RequestMethod.GET)
+    public Map<String,Object> queryGet(Student student){
+        log.info("query student info: {}", student);
+        return studentService.queryStudent(student);
+    }
+
+    @RequestMapping(value = "/query",method = RequestMethod.POST)
+    public Map<String,Object> queryPost(@RequestBody Student student){
+        log.info("query student info: {}", student);
         return studentService.queryStudent(student);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public String delete(Student student){
-        if(studentService.deleteStudentByStuNo(student)>0)
-            return "Delete successfully.";
-        else
-            return "Fail to delete.";
+    public Map<String,Object> delete(@RequestBody Student student){
+        log.info("delete student info: {}", student);
+        return studentService.deleteStudentByStuNo(student);
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(Student student){
-        if(studentService.updateStudentByStuNo(student)>0)
-            return "Update successfully.";
-        else
-            return "Fail to update";
+    public Map<String,Object> update(@RequestBody Student student){
+        log.info("update student info: {}", student);
+        return studentService.updateStudentByStuNo(student);
     }
 
     @RequestMapping(value = "/addOne",method = RequestMethod.POST)
-    public String addOne(Student student){
-        if(studentService.addOneStudent(student)>0)
-            return "Add successfully.";
-        else
-            return "Fail to add";
+    public Map<String,Object> addOne(@RequestBody Student student){
+        log.info("add student info: {}", student);
+        return studentService.addOneStudent(student);
     }
 
     @RequestMapping(value = "batchAdd",method = RequestMethod.POST)
-    public String batchAdd(List<Student> studentList){
-        if(studentService.batchAddStudent(studentList)>0)
-            return "Add successfully.";
-        else
-            return "Fail to add";
+    public Map<String,Object> batchAdd(@RequestBody List<Student> studentList){
+        log.info("list info: {}", studentList);
+        return studentService.batchAddStudent(studentList);
     }
 }

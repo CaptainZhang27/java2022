@@ -4,15 +4,16 @@ package org.scut.java2022.service;
 import org.scut.java2022.pojo.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
-    List<Student> queryStudent(Student student);
+    Map<String,Object> queryStudent(Student student);
 
-    int addOneStudent(Student student);
+    Map<String,Object> addOneStudent(Student student);
 
-    int batchAddStudent(List<Student> studentList);
+    Map<String,Object> batchAddStudent(List<Student> studentList);
 
-    int deleteStudentByStuNo(Student student);
+    Map<String,Object> deleteStudentByStuNo(Student student);
 
-    int updateStudentByStuNo(Student student);
+    Map<String,Object> updateStudentByStuNo(Student student);
 }
