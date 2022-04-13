@@ -3,7 +3,7 @@ package org.scut.java2022.service.impl;
 import org.scut.java2022.mapper.UserMapper;
 import org.scut.java2022.pojo.User;
 import org.scut.java2022.service.UserService;
-import org.scut.java2022.utils.TokenUntil;
+import org.scut.java2022.utils.JWTUntil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class UserServiceImp implements UserService {
             }else{
                 if(recordedUser.getPassword().equals(user.getPassword())){
                     result.put("code","1000");
-                    result.put("token", TokenUntil.getToken(user));
+                    result.put("token", JWTUntil.getToken(user));
                 }
                 else {
                     result.put("code","2001");

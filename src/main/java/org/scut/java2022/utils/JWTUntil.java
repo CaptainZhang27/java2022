@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 
 @Component
-public class TokenUntil {
+public class JWTUntil {
     private static final String SING = "12345678";
 
     public static String getToken(User user){

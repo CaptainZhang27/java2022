@@ -2,10 +2,9 @@ package org.scut.java2022.interceptor;
 
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.scut.java2022.utils.TokenUntil;
+import org.scut.java2022.utils.JWTUntil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,7 @@ public class JWTInterceptor implements HandlerInterceptor {
 
         Map<String,Object> result=new HashMap<>();
         try{
-            TokenUntil.verify(token);
+            JWTUntil.verify(token);
             return true;
         }catch (TokenExpiredException e){
             result.put("msg","token过期");
